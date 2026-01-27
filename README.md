@@ -1,0 +1,1 @@
+Čia yra mokomasis bibliotekos programos projektas su Django framework'u.
