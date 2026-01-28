@@ -31,6 +31,11 @@ class Book(models.Model):
     isbn = models.CharField(max_length=13)
     genre = models.ManyToManyField(to="Genre")
 
+    def display_genre(self):
+        return ", ".join(genre.name for genre in self.genre.all())
+
+    display_genre.short_description = "Žanrai"
+
     def __str__(self):
         return self.title
 
