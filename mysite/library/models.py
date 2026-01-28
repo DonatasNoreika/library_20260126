@@ -4,11 +4,15 @@ import uuid
 
 # Create your models here.
 class Author(models.Model):
-    first_name = models.CharField()
-    last_name = models.CharField()
+    first_name = models.CharField(verbose_name="Vardas")
+    last_name = models.CharField(verbose_name="Pavardė")
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
+
+    class Meta:
+        verbose_name = "Autorius"
+        verbose_name_plural = "Autoriai"
 
 
 class Genre(models.Model):
