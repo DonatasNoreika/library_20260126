@@ -18,6 +18,8 @@ class BookAdmin(admin.ModelAdmin):
 class BookInstanceAdmin(admin.ModelAdmin):
     list_display = ['uuid', 'book', 'due_back', 'status']
     list_filter = ['status', 'due_back', 'book']
+    search_fields = ['uuid', 'book__title', 'book__author__last_name']
+    list_editable = ['due_back', 'status']
 
     fieldsets = [
         ('General', {'fields': ('uuid', 'book')}),
