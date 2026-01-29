@@ -1,5 +1,11 @@
+{% extends "base.html" %}
+
+{% block title %}PRADŽIA{% endblock %}
+
+{% block content %}
 <h1>Bibliotekos statistika:</h1>
 <p>Knygų: <b>{{ num_books }}</b></p>
 <p>Knygų kopijų: <b>{{ num_instances }}</b></p>
 <p>Laisvų knygų: <b>{{ num_instances_available }}</b></p>
 <p>Autorių: <b>{{ num_authors }}</b></p>
+{% endblock %}
