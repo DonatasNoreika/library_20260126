@@ -8,6 +8,8 @@
 <p>{{ author.description }}</p>
 <h3>Autoriaus knygos:</h3>
 {% for book in author.books.all %}
-<p>{{ book.title }}</p>
+<p><a href="{% url 'book' book.pk %}">{{ book.title }}</a></p>
+{% empty %}
+<p>Šio autoriaus knygų neturime</p>
 {% endfor %}
 {% endblock %}
