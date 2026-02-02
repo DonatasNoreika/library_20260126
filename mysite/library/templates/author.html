@@ -6,4 +6,8 @@
 <p>Vardas: {{ author.first_name }}</p>
 <p>Pavardė: {{ author.last_name }}</p>
 <p>{{ author.description }}</p>
+<h3>Autoriaus knygos:</h3>
+{% for book in author.books.all %}
+<p>{{ book.title }}</p>
+{% endfor %}
 {% endblock %}
