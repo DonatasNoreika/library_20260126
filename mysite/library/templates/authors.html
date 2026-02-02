@@ -4,8 +4,9 @@
 
 {% block content %}
 
+<h1 class="mb-4">Autoriai</h1>
 {% for author in authors %}
-<p>{{ author }}</p>
+<p><a href="{% url 'author' author.pk %}">{{ author }}</a></p>
 <hr>
 {% endfor %}
 {% endblock %}
