@@ -8,8 +8,22 @@
 <p>ISBN: {{ book.isbn }}</p>
 <p>Žanrai: {{ book.display_genre }}</p>
 <p>{{ book.summary }}</p>
-<!--<h3>Autoriaus knygos:</h3>-->
-<!--{% for book in author.books.all %}-->
-<!--<p>{{ book.title }}</p>-->
-<!--{% endfor %}-->
+<h3>Kopijos:</h3>
+{% for instance in book.bookinstances.all %}
+
+<p>{{ instance.uuid }}</p>
+
+{% if instance.due_back %}
+<p>Bus grąžinta: {{ instance.due_back }}</p>
+{% endif %}
+
+<p class="{% if instance.status == 't' %}text-danger{% elif instance.status == 'a' %}text-success{% elif instance.status == 'r' %}text-warning{% endif %}">
+    {{ instance.get_status_display }}
+</p>
+
+<hr>
+
+{% empty %}
+<p>Šios knygos kopijų neturime</p>
+{% endfor %}
 {% endblock %}
