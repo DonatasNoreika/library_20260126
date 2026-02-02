@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Knyga{% endblock %}
+
+{% block content %}
+<h1>Knyga "{{ book.title }}"</h1>
+<p>Autorius: {{ book.author }}</p>
+<p>ISBN: {{ book.isbn }}</p>
+<p>Žanrai: {{ book.display_genre }}</p>
+<p>{{ book.summary }}</p>
+<!--<h3>Autoriaus knygos:</h3>-->
+<!--{% for book in author.books.all %}-->
+<!--<p>{{ book.title }}</p>-->
+<!--{% endfor %}-->
+{% endblock %}

@@ -6,7 +6,7 @@
 
 <h1 class="mb-4">Knygos</h1>
 {% for book in books %}
-<p><a href="">{{ book.title }}</a></p>
+<p><a href="{{ book.pk }}">{{ book.title }}</a></p>
 <hr>
 {% endfor %}
 {% endblock %}
