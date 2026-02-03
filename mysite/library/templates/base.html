@@ -39,8 +39,8 @@
                 </li>
 
             </ul>
-            <form class="d-flex">
-                <input class="form-control me-2" type="text" placeholder="Paieška">
+            <form class="d-flex" method="get" action="{% url 'search' %}">
+                <input class="form-control me-2" type="text" name="query" placeholder="Paieška">
             </form>
         </div>
     </div>
