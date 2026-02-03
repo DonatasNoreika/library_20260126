@@ -3,6 +3,9 @@
 {% block title %}Knyga{% endblock %}
 
 {% block content %}
+{% if book.cover %}
+<img class="card-img-top mb-3 rounded" src="{{ book.cover.url }}" style="max-width: 20%" alt="...">
+{% endif %}
 <h1>Knyga "{{ book.title }}"</h1>
 <p>Autorius: {{ book.author }}</p>
 <p>ISBN: {{ book.isbn }}</p>

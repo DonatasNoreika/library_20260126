@@ -37,6 +37,7 @@ class Book(models.Model):
     summary = models.TextField()
     isbn = models.CharField(max_length=13)
     genre = models.ManyToManyField(to="Genre")
+    cover = models.ImageField(upload_to="covers", null=True, blank=True)
 
     def display_genre(self):
         return ", ".join(genre.name for genre in self.genre.all())
