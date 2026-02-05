@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 import uuid
 
@@ -54,6 +55,9 @@ class BookInstance(models.Model):
                              on_delete=models.CASCADE,
                              related_name="bookinstances")
     due_back = models.DateField(null=True, blank=True)
+    reader = models.ForeignKey(to=User,
+                               on_delete=models.SET_NULL,
+                               null=True, blank=True)
 
     LOAN_STATUS = (
         ('d', 'Administered'),
