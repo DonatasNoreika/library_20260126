@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block title %}Mano paimtos knygos{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Mano paimtos knygos:</h1>
+{% for instance in instances %}
+<p>{{ instance }}</p>
+{% endfor %}
+{% endblock %}
