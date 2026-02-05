@@ -5,7 +5,7 @@
 {% block content %}
 <p>Vardas: {{ author.first_name }}</p>
 <p>Pavardė: {{ author.last_name }}</p>
-<p>{{ author.description }}</p>
+<p>{{ author.description | safe }}</p>
 <h3>Autoriaus knygos:</h3>
 {% for book in author.books.all %}
 <p><a href="{% url 'book' book.pk %}">{{ book.title }}</a></p>

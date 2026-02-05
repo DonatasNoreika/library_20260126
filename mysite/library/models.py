@@ -2,12 +2,13 @@ from django.contrib.auth.models import User
 from django.db import models
 import uuid
 from django.utils import timezone
+from tinymce.models import HTMLField
 
 # Create your models here.
 class Author(models.Model):
     first_name = models.CharField(verbose_name="Vardas")
     last_name = models.CharField(verbose_name="Pavardė")
-    description = models.TextField(default="")
+    description = HTMLField(default="")
 
     def display_books(self):
         return ", ".join(book.title for book in self.books.all())
