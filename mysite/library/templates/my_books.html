@@ -5,6 +5,11 @@
 {% block content %}
 <h1 class="mb-4">Mano paimtos knygos:</h1>
 {% for instance in instances %}
-<p>{{ instance }}</p>
+<p>{{ instance.book.title }} ({{ instance.book.author }})</p>
+<p>{{ instance.uuid }}</p>
+<p class="{% if instance.is_overdue %}text-danger{% endif %}">
+    {{ instance.get_status_display }}{% if instance.due_back %} - {{ instance.due_back }}{% endif %}
+</p>
+<hr>
 {% endfor %}
 {% endblock %}
