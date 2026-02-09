@@ -11,6 +11,16 @@
 <p>ISBN: {{ book.isbn }}</p>
 <p>Žanrai: {{ book.display_genre }}</p>
 <p>{{ book.summary }}</p>
+
+<h3>Komentarai:</h3>
+{% for review in book.reviews.all %}
+<p><strong>{{ review.reviewer }}</strong>, <em>{{ review.date_created }}</em></p>
+<p>{{ review.content }}</p>
+<hr>
+{% empty %}
+<p>Komentarų nėra</p>
+{% endfor %}
+
 <h3>Kopijos:</h3>
 {% for instance in book.bookinstances.all %}
 
