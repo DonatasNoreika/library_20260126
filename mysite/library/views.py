@@ -1,9 +1,12 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render
+from django.urls import reverse_lazy
 from .models import Book, Author, Genre, BookInstance
 from django.views import generic
 from django.core.paginator import Paginator
 from django.db.models import Q
+
 
 def index(request):
     num_visits = request.session.get('num_visits', 1)
@@ -58,7 +61,7 @@ def search(request):
                                      Q(author__last_name__icontains=query) |
                                      Q(summary__icontains=query)),
         "authors": Author.objects.filter(Q(first_name__icontains=query) |
-                                        Q(last_name__icontains=query))
+                                         Q(last_name__icontains=query))
     }
     return render(request, template_name="search.html", context=context)
 
@@ -71,3 +74,8 @@ class MyBookInstanceListView(LoginRequiredMixin, generic.ListView):
     def get_queryset(self):
         return BookInstance.objects.filter(reader=self.request.user)
 
+
+class SignUpView(generic.CreateView):
+    form_class = UserCreationForm
+    template_name = "signup.html"
+    success_url = reverse_lazy('login')
