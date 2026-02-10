@@ -12,10 +12,10 @@ class BookReviewForm(forms.ModelForm):
 class CustomUserCreateForm(UserCreationForm):
     class Meta:
         model = CustomUser
-        fields = ['username', 'password1', 'password1']
+        fields = ['username', 'password1', 'password2']
 
-class UserChangeForm(forms.ModelForm):
-    class Meta:
-        model = CustomUser
-        fields = ['first_name', 'last_name', 'email', 'photo']
+# class UserChangeForm(forms.ModelForm):
+#     class Meta:
+#         model = CustomUser
+#         fields = ['first_name', 'last_name', 'email', 'photo']
 

@@ -3,11 +3,11 @@ from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, reverse
 from django.urls import reverse_lazy
 from django.views.generic.edit import FormMixin
-from .models import Book, Author, Genre, BookInstance
+from .models import Book, Author, Genre, BookInstance, CustomUser
 from django.views import generic
 from django.core.paginator import Paginator
 from django.db.models import Q
-from .forms import BookReviewForm, UserChangeForm, CustomUserCreateForm
+from .forms import BookReviewForm, CustomUserCreateForm
 
 
 def index(request):
@@ -103,9 +103,10 @@ class SignUpView(generic.CreateView):
 
 
 class ProfileUpdateView(LoginRequiredMixin, generic.UpdateView):
-    form_class = UserChangeForm
     template_name = "profile.html"
     success_url = reverse_lazy("profile")
+    model = CustomUser
+    fields = ['first_name', 'last_name', 'email', 'photo']
 
     def get_object(self, queryset = ...):
         return self.request.user
