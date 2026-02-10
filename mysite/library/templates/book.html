@@ -22,7 +22,11 @@
 </form>
 {% endif %}
 {% for review in book.reviews.all %}
-<p><strong>{{ review.reviewer }}</strong>, <em>{{ review.date_created }}</em></p>
+<p>
+    {% if review.reviewer.photo %}
+    <img src="{{ review.reviewer.photo.url }}" class="rounded-circle" style="width: 30px">
+    {% endif %}
+    <strong>{{ review.reviewer }}</strong>, <em>{{ review.date_created }}</em></p>
 <p>{{ review.content }}</p>
 <hr>
 {% empty %}
