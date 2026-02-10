@@ -1,10 +1,14 @@
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, AbstractUser
 from django.db import models
 import uuid
 from django.utils import timezone
 from tinymce.models import HTMLField
 
 # Create your models here.
+class CustomUser(AbstractUser):
+    photo = models.ImageField(upload_to="profile_pics", null=True, blank=True)
+
+
 class Author(models.Model):
     first_name = models.CharField(verbose_name="Vardas")
     last_name = models.CharField(verbose_name="Pavardė")
@@ -56,7 +60,7 @@ class BookInstance(models.Model):
                              on_delete=models.CASCADE,
                              related_name="bookinstances")
     due_back = models.DateField(null=True, blank=True)
-    reader = models.ForeignKey(to=User,
+    reader = models.ForeignKey(to='library.CustomUser',
                                on_delete=models.SET_NULL,
                                null=True, blank=True)
 
@@ -81,7 +85,7 @@ class BookReview(models.Model):
                              on_delete=models.SET_NULL,
                              null=True, blank=True,
                              related_name='reviews')
-    reviewer = models.ForeignKey(to=User, on_delete=models.SET_NULL, null=True, blank=True)
+    reviewer = models.ForeignKey(to='library.CustomUser', on_delete=models.SET_NULL, null=True, blank=True)
     date_created = models.DateTimeField(auto_now_add=True)
     content = models.TextField()
 

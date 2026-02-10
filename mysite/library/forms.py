@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
-from .models import BookReview
+from .models import BookReview, CustomUser
 from django import forms
+from django.contrib.auth.forms import UserCreationForm
 
 
 class BookReviewForm(forms.ModelForm):
@@ -8,8 +9,13 @@ class BookReviewForm(forms.ModelForm):
         model = BookReview
         fields = ['content']
 
+class CustomUserCreateForm(UserCreationForm):
+    class Meta:
+        model = CustomUser
+        fields = ['username', 'password1', 'password1']
+
 class UserChangeForm(forms.ModelForm):
     class Meta:
-        model = User
-        fields = ['first_name', 'last_name', 'email']
+        model = CustomUser
+        fields = ['first_name', 'last_name', 'email', 'photo']
 

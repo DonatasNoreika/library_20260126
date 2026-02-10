@@ -3,9 +3,12 @@
 {% block title %}Mano profilis{% endblock %}
 
 {% block content %}
+{% if user.photo %}
+<img src="{{ user.photo.url }}" class="rounded-circle" alt="...">
+{% endif %}
 <h1>Mano profilis</h1>
 <p>Vartotojo vardas: {{ user.username }}</p>
-<form method="post">
+<form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {% load crispy_forms_tags %}
     {{ form | crispy }}
