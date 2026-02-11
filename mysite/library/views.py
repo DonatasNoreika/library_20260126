@@ -7,7 +7,9 @@ from .models import Book, Author, Genre, BookInstance, CustomUser
 from django.views import generic
 from django.core.paginator import Paginator
 from django.db.models import Q
-from .forms import BookReviewForm, CustomUserCreateForm
+from .forms import (BookReviewForm,
+                    CustomUserCreateForm,
+                    BookInstanceCreateUpdateForm)
 
 
 def index(request):
@@ -134,7 +136,8 @@ class BookInstanceCreateView(LoginRequiredMixin, UserPassesTestMixin, generic.Cr
     model = BookInstance
     template_name = "instance_form.html"
     success_url = reverse_lazy("instances")
-    fields = ['book', 'reader', 'due_back', 'status']
+    # fields = ['book', 'reader', 'due_back', 'status']
+    form_class = BookInstanceCreateUpdateForm
 
     def test_func(self):
         return self.request.user.is_staff
