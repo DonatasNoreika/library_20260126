@@ -15,4 +15,7 @@
 {% endif %}
 <p>Bus prieinama: <span class="{% if instance.is_overdue %}text-danger{% endif %}">{{ instance.due_back }}</span></p>
 <p>Būsena: {{ instance.get_status_display }}</p>
+<div>
+    <a class="btn btn-warning btn-sm mt-1 mb-1" href="{% url 'instance_update' instance.pk %}">Redaguoti</a>
+</div>
 {% endblock %}
