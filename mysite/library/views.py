@@ -1,4 +1,4 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, reverse
 from django.urls import reverse_lazy
@@ -110,4 +110,13 @@ class ProfileUpdateView(LoginRequiredMixin, generic.UpdateView):
 
     def get_object(self, queryset = ...):
         return self.request.user
+
+
+class BookInstanceListView(LoginRequiredMixin, UserPassesTestMixin, generic.ListView):
+    model = BookInstance
+    context_object_name = 'instances'
+    template_name = 'instances.html'
+
+    def test_func(self):
+        return self.request.user.is_staff
 
