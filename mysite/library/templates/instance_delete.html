@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}Egzemplioriaus trynimas{% endblock %}
+
+{% block content %}
+<h1>Egzemplioriaus trynimas</h1>
+<p>Ar tikrai norite ištrinti knygos egzempliorių "{{ instance }}"?
+<form method="post">
+    {% csrf_token %}
+    {% load crispy_forms_tags %}
+    <button type="submit" class="btn btn-danger">Ištrinti</button>
+    <a class="btn btn-outline-secondary" href="{% url 'instance' instance.pk %}">Atšaukti</a>
+</form>
+{% endblock %}
