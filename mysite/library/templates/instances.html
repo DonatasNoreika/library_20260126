@@ -3,6 +3,9 @@
 {% block title %}Administravimas{% endblock %}
 
 {% block content %}
+<div>
+    <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'instance_create' %}">Naujas egzempliorius</a>
+</div>
 <h1>Knygų egzempliorių administravimas</h1>
 {% for instance in instances %}
 <a href="{{ instance.pk }}">
