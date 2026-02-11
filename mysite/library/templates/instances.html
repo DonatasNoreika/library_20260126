@@ -5,9 +5,11 @@
 {% block content %}
 <h1>Knygų egzempliorių administravimas</h1>
 {% for instance in instances %}
-<p>
-    {{ instance.book }} - {{ instance.uuid }}
-    <span class="{% if instance.is_overdue %}text-danger{% endif %}">{{ instance.get_status_display }}</span>
-</p>
+<a href="{{ instance.pk }}">
+    <p>
+        {{ instance.book }} - {{ instance.uuid }}
+        <span class="{% if instance.is_overdue %}text-danger{% endif %}">{{ instance.get_status_display }}</span>
+    </p>
+</a>
 {% endfor %}
 {% endblock %}

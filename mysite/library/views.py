@@ -120,3 +120,14 @@ class BookInstanceListView(LoginRequiredMixin, UserPassesTestMixin, generic.List
     def test_func(self):
         return self.request.user.is_staff
 
+
+class BookInstanceDetailView(LoginRequiredMixin, UserPassesTestMixin, generic.DetailView):
+    model = BookInstance
+    context_object_name = "instance"
+    template_name = "instance.html"
+
+    def test_func(self):
+        return self.request.user.is_staff
+
+
+
