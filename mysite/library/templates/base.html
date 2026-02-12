@@ -37,6 +37,24 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'books' %}">Knygos</a>
                 </li>
+                <li class="nav-item">
+                    {% load i18n %}
+                    <form action="{% url 'set_language' %}" method="post" class="d-flex">
+                        {% csrf_token %}
+                        <input name="next" type="hidden" value="{{ redirect_to }}"/>
+                        <select name="language" class="form-control me-2" onchange="this.form.submit()">
+                            {% load static %}
+                            {% get_current_language as LANGUAGE_CODE %}
+                            {% get_available_languages as LANGUAGES %}
+                            {% for lang in LANGUAGES %}
+                            <option value="{{ lang.0 }}"
+                                    {% if lang.0 == LANGUAGE_CODE %}selected="selected" {% endif %}>
+                                {{ lang.1 }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </form>
+                </li>
                 {% if user.is_authenticated %}
                 <li class="nav-item"><a class="nav-link" href="{% url 'profile' %}">
                     <svg class="bi bi-person" width="1.5em" height="1.5em" viewBox="0 0 16 16" fill="currentColor"
