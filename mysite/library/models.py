@@ -4,10 +4,12 @@ import uuid
 from django.utils import timezone
 from tinymce.models import HTMLField
 from PIL import Image
+from django.utils.translation import gettext_lazy as _
+
 
 # Create your models here.
 class CustomUser(AbstractUser):
-    photo = models.ImageField(upload_to="profile_pics", null=True, blank=True)
+    photo = models.ImageField(verbose_name=_('Photo'), upload_to="profile_pics", null=True, blank=True)
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
@@ -24,45 +26,54 @@ class CustomUser(AbstractUser):
 
 
 class Author(models.Model):
-    first_name = models.CharField(verbose_name="Vardas")
-    last_name = models.CharField(verbose_name="Pavardė")
-    description = HTMLField(default="")
+    first_name = models.CharField(verbose_name=_('First Name'))
+    last_name = models.CharField(verbose_name=_('Last Name'))
+    description = HTMLField(verbose_name=_('Description'), default="")
 
     def display_books(self):
         return ", ".join(book.title for book in self.books.all())
 
-    display_books.short_description = "Knygos"
+    display_books.short_description = verbose_name=_('Books')
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
 
     class Meta:
-        verbose_name = "Autorius"
-        verbose_name_plural = "Autoriai"
+        verbose_name = _('Author')
+        verbose_name_plural = _('Authors')
 
 
 class Genre(models.Model):
-    name = models.CharField()
+    name = models.CharField(verbose_name=_('Name'))
+
+    class Meta:
+        verbose_name = _('Genre')
+        verbose_name_plural = _('Genres')
 
     def __str__(self):
         return self.name
 
 
 class Book(models.Model):
-    title = models.CharField()
+    title = models.CharField(verbose_name=_('Title'))
     author = models.ForeignKey(to="Author",
+                               verbose_name=_('Author'),
                                on_delete=models.SET_NULL,
                                null=True, blank=True,
                                related_name="books")
-    summary = models.TextField()
+    summary = models.TextField(verbose_name=_('Summary'))
     isbn = models.CharField(max_length=13)
-    genre = models.ManyToManyField(to="Genre")
-    cover = models.ImageField(upload_to="covers", null=True, blank=True)
+    genre = models.ManyToManyField(to="Genre", verbose_name=_('Genre'))
+    cover = models.ImageField(verbose_name=_('Cover'), upload_to="covers", null=True, blank=True)
 
     def display_genre(self):
         return ", ".join(genre.name for genre in self.genre.all())
 
-    display_genre.short_description = "Žanrai"
+    display_genre.short_description = _('Genres')
+
+    class Meta:
+        verbose_name = _('Book')
+        verbose_name_plural = _('Books')
 
     def __str__(self):
         return self.title
@@ -71,24 +82,32 @@ class Book(models.Model):
 class BookInstance(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4)
     book = models.ForeignKey(to="Book",
+                             verbose_name=_('Book'),
                              on_delete=models.CASCADE,
                              related_name="bookinstances")
-    due_back = models.DateField(null=True, blank=True)
+    due_back = models.DateField(verbose_name=_('Due Back'), null=True, blank=True)
     reader = models.ForeignKey(to='library.CustomUser',
+                               verbose_name=_('Reader'),
                                on_delete=models.SET_NULL,
                                null=True, blank=True)
 
     LOAN_STATUS = (
-        ('d', 'Administered'),
-        ('t', 'Taken'),
-        ('a', 'Available'),
-        ('r', 'Reserved'),
+        ('d', _('Administered')),
+        ('t', _('Taken')),
+        ('a', _('Available')),
+        ('r', _('Reserved')),
     )
 
-    status = models.CharField(max_length=1, choices=LOAN_STATUS, default="d")
+    status = models.CharField(verbose_name=_('Status'), max_length=1, choices=LOAN_STATUS, default="d")
 
     def is_overdue(self):
         return self.due_back and timezone.now().date() > self.due_back
+
+    is_overdue.short_description = _('Is Overdue')
+
+    class Meta:
+        verbose_name = _('Book instance')
+        verbose_name_plural = _('Book instances')
 
     def __str__(self):
         return f"{self.book} ({self.uuid})"
@@ -96,13 +115,19 @@ class BookInstance(models.Model):
 
 class BookReview(models.Model):
     book = models.ForeignKey(to="Book",
+                             verbose_name=_('Book'),
                              on_delete=models.SET_NULL,
                              null=True, blank=True,
                              related_name='reviews')
-    reviewer = models.ForeignKey(to='library.CustomUser', on_delete=models.SET_NULL, null=True, blank=True)
-    date_created = models.DateTimeField(auto_now_add=True)
-    content = models.TextField()
+    reviewer = models.ForeignKey(to='library.CustomUser',
+                                 verbose_name=_('Reviewer'),
+                                 on_delete=models.SET_NULL,
+                                 null=True, blank=True)
+    date_created = models.DateTimeField(verbose_name=_('Date Created'), auto_now_add=True)
+    content = models.TextField(verbose_name=_('Content'))
 
     class Meta:
         ordering = ["-date_created"]
+        verbose_name = _('Book review')
+        verbose_name_plural = _('Book reviews')
 
